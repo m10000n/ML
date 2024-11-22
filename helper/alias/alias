@@ -1,0 +1,16 @@
+alias create_env="conda env create -f helper/env/env.yml"
+alias update_env="conda env update -f helper/env/env.yml --prune"
+
+alias format="./helper/shell/format.sh"
+
+alias to_train="./helper/shell/to_train.sh"
+alias from_train="./helper/shell/from_train.sh"
+
+alias setup_train="./helper/shell/setup_train.sh"
+
+alias run_model="./helper/shell/run_model.sh"
+alias run_temp="./helper/shell/run_temp.sh"
+alias download_dataset="./helper/shell/download_dataset.sh"
+
+alias attach="./helper/shell/attach.sh"
+alias kill_tmux="./helper/shell/kill_tmux.sh"

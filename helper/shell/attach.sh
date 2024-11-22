@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+source "$(python -m helper.path local_shell)/source.sh"
+
+# local
+
+source $SSH_SETUP
+
+ssh -t -i "$IDENTITY_FILE" -p "$PORT" "$USER"@"$HOST" "
+set -e
+if tmux has-session -t my_session 2>/dev/null; then
+  tmux attach-session -t my_session
+else
+  echo '----->There is no tmux session to attach.<---'
+fi" 2>&1 | grep -v 'Connection to [0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+ closed.'
