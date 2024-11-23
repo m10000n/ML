@@ -48,4 +48,4 @@ attach to tmux session: `attach`
 ## AWS
 - inbound: ssh
 - outbound: https
-- permissions policy: ec2:StopInstances
+- permissions policies: AmazonS3ReadOnlyAccess, ec2:StopInstances, SecretsManagerReadWrite

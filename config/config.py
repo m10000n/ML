@@ -1,8 +1,8 @@
 import argparse
 
-MODEL = None
+MODEL = "Wang_X_2020_Decoding_and_mapping_task_states_of_the_human_brain_via_deep_learning"
 
-DATASET = None
+DATASET = "hcp_openacces"
 
 if not MODEL:
     raise ValueError("You have not specified the current model.")

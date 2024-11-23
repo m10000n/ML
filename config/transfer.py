@@ -2,7 +2,7 @@ from config.ssh import USER
 
 EXCLUDED_FILES = [".DS_Store", "__pycache__"]
 
-REMOTE_BASE_DIR = None
+REMOTE_BASE_DIR = f"/home/{USER}/exp"
 
 INCLUDE_DATASET = False
 
