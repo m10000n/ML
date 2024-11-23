@@ -3,7 +3,6 @@ set -e
 source "$(python -m helper.path local_shell)/source.sh"
 
 # local
-echo $LOCAL_BASE_DIR
 
 EXCLUDE_PATTERN="$DATALOADER_PATH/*/data/*"
 

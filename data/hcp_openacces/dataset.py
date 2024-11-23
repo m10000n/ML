@@ -121,7 +121,6 @@ class TaskDataset(Dataset):
             verbose=False,
         )
         subject_ids = [subject_path.split("/")[-2] for subject_path in subject_paths]
-        subject_ids = subject_ids[0:10] #!!!!
         downloaded_subject_ids = [
             folder.name for folder in get_folders(TaskDataset.ROOT_DIR)
         ]

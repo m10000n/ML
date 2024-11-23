@@ -1,6 +1,8 @@
 import argparse
 
-MODEL = "Wang_X_2020_Decoding_and_mapping_task_states_of_the_human_brain_via_deep_learning"
+MODEL = (
+    "Wang_X_2020_Decoding_and_mapping_task_states_of_the_human_brain_via_deep_learning"
+)
 
 DATASET = "hcp_openacces"
 
