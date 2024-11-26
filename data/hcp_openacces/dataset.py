@@ -139,7 +139,7 @@ class TaskDataset(Dataset):
             os.makedirs(temp_path, exist_ok=True)
             if num_workers <= 1:
                 print(
-                    f"----->{'Start' if len(downloaded_subject_ids) == 0 else 'Continue'} downloading dataset.<<-----"
+                    f"----->>>{'Start' if len(downloaded_subject_ids) == 0 else 'Continue'} downloading dataset.<<<-----"
                 )
                 TaskDataset._download_dataset(
                     subject_ids=required_subject_ids,
@@ -150,7 +150,7 @@ class TaskDataset(Dataset):
                 print()
             else:
                 print(
-                    f"----->{'Start' if len(downloaded_subject_ids) == 0 else 'Continue'} downloading dataset. workers: {num_workers}<<-----"
+                    f"----->>>{'Start' if len(downloaded_subject_ids) == 0 else 'Continue'} downloading dataset. workers: {num_workers}<<<-----"
                 )
                 aws.set_concurrent_requests(max_requests=num_workers)
 
@@ -189,7 +189,7 @@ class TaskDataset(Dataset):
             meta_data[f"n_{task}"] += task_n
         json.write(file_path=TaskDataset.META_PATH, data=meta_data)
 
-        print("----->Finished downloading dataset.<<-----")
+        print("----->>>Finished downloading dataset.<<<-----")
 
     @staticmethod
     def _print_progress(progress):
