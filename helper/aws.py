@@ -72,10 +72,8 @@ def get_file(client, bucket, file_path):
     try:
         response = client.get_object(Bucket=bucket, Key=str(file_path))
         return response["Body"].read()
-    except ClientError as e:
-        if e.response["Error"]["Code"] == "404":
-            raise FileNotFoundError(f"Could not find this object key: {file_path}")
-        raise
+    except client.exceptions.NoSuchKey:
+        raise FileNotFoundError(f"Could not find this object key: {file_path}")
 
 
 def download(client, bucket, file_path, local_file_path):
