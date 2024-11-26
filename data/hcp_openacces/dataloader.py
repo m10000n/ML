@@ -19,6 +19,7 @@ def get_loader(dataset, batch_size, shuffle, world_size=0, rank=0, num_workers=4
             batch_size=batch_size,
             shuffle=True,
             num_workers=num_workers,
+            pin_memory=True,
         )
     else:
         data_sampler = DistributedSampler(
@@ -29,6 +30,7 @@ def get_loader(dataset, batch_size, shuffle, world_size=0, rank=0, num_workers=4
             batch_size=batch_size,
             sampler=data_sampler,
             shuffle=False,
+            pin_memory=True
         )
 
     return dataloader
