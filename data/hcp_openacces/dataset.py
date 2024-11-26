@@ -1,6 +1,7 @@
 import math
 import os
 import random
+import shutil
 import sys
 from multiprocessing import Manager, Pool
 from pathlib import Path
@@ -15,7 +16,7 @@ import helper.json as json
 from helper.folder import get_files, get_folders
 from helper.system import get_max_workers
 
-# this dataset needs ~ 6.2 * TASK_LIMIT * 1034 GB
+# dataset size for TASK_LIMIT = 1: 660 GB
 
 
 class TaskDataset(Dataset):
@@ -76,11 +77,9 @@ class TaskDataset(Dataset):
 
     def __getitem__(self, idx):
         file_path, task = self.samples[idx]
-
         data = torch.load(f=file_path, weights_only=True)
         start_idx = np.random.randint(low=0, high=data.shape[0] - self.WINDOW_WIDTH + 1)
         data = data[start_idx : start_idx + self.WINDOW_WIDTH, ...]
-
         label = self.TASKS.index(task)
 
         if self.transform:
@@ -174,7 +173,6 @@ class TaskDataset(Dataset):
                 with Pool(processes=num_workers) as pool:
                     pool.map(TaskDataset._download_subset, args_list)
                     print()
-
         finally:
             os.rmdir(path=temp_path)
 
@@ -203,14 +201,12 @@ class TaskDataset(Dataset):
     @staticmethod
     def _download_dataset(subject_ids, secrete, progress):
         client = aws.get_client(secrete=secrete)
-
         temp_path = TaskDataset.ROOT_DIR / ".temp"
 
         for i, subject_id in enumerate(subject_ids):
             subject_data_path = TaskDataset.ROOT_DIR / subject_id
+            temp_tfmrt_file_path = temp_path / f"temp_tfmrt_{subject_id}.nii.gz"
             try:
-                temp_tfmrt_file_path = temp_path / f"temp_tfmrt_{subject_id}.nii.gz"
-
                 for j, (task, ev) in enumerate(
                     zip(TaskDataset.TASKS, TaskDataset.TASK_EVS)
                 ):
@@ -220,7 +216,6 @@ class TaskDataset(Dataset):
                     ev_file_path = TaskDataset.EV_FILE_FORMAT.format(
                         id=subject_id, task=task, ev=ev
                     )
-
                     try:
                         aws.download(
                             client=client,
@@ -243,7 +238,6 @@ class TaskDataset(Dataset):
                             "z_start"
                         ] : TaskDataset.BRAIN_BOUNDARIES["z_end"],
                     ]
-
                     try:
                         ev_file = aws.get_file(
                             client=client,
@@ -280,7 +274,9 @@ class TaskDataset(Dataset):
                     os.remove(path=temp_tfmrt_file_path)
             except BaseException:
                 if subject_data_path.exists():
-                    os.remove(path=subject_data_path)
+                    shutil.rmtree(path=subject_data_path)
+                if temp_tfmrt_file_path.exists():
+                    os.remove(path=temp_tfmrt_file_path)
                 raise
 
             if subject_data_path.exists():
