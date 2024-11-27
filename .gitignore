@@ -212,4 +212,5 @@ venv/
 # End of https://www.gitignore.io/api/macos,linux,django,python,pycharm
 
 # MY
-.ToDo.txt
+ToDo.txt
+AWS.md
