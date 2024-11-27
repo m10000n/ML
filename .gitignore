@@ -125,7 +125,6 @@ fabric.properties
 
 # Distribution / packaging
 .Python
-env/
 build/
 develop-eggs/
 dist/
@@ -199,7 +198,6 @@ celerybeat-schedule
 # virtualenv
 .venv
 venv/
-ENV/
 
 # Spyder project settings
 .spyderproject
@@ -211,7 +209,7 @@ ENV/
 # mkdocs documentation
 /site
 
+# End of https://www.gitignore.io/api/macos,linux,django,python,pycharm
+
 # MY
 .ToDo.txt
-
-# End of https://www.gitignore.io/api/macos,linux,django,python,pycharm
