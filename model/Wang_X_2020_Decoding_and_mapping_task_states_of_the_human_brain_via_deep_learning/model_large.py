@@ -48,6 +48,7 @@ class ModelLarge(nn.Module):
             in_channels=128, out_channels=64, kernel_size=(5, 6, 6), stride=1, padding=0
         )
         self.fc1 = nn.Linear(64, 64)
+        self.drop_out = nn.Dropout()
         self.fc2 = nn.Linear(64, 7)
 
         self.init_weights()
@@ -82,6 +83,7 @@ class ModelLarge(nn.Module):
         x = self.relu(x)
         x = self.fc1(torch.flatten(x, 1))
         x = self.relu(x)
+        x = self.drop_out(x)
         x = self.fc2(x)
         return x
 
