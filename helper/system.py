@@ -33,9 +33,10 @@ def get_cpu_info():
 
 
 def get_gpu_info():
-    gpus = GPUtil.getGPUs()
-
-    if not gpus:
+    try:
+        gpus = GPUtil.getGPUs()
+    except ValueError:
+        # NVIDIA-SMI is available, but there are no GPUs
         return None
 
     gpus_ = []
@@ -51,5 +52,5 @@ def get_num_physical_cores():
     return psutil.cpu_count(logical=False)
 
 
-def get_max_workers():
-    return max(1, get_num_physical_cores() - 1)
+def get_num_logical_cores():
+    return psutil.cpu_count(logical=True)
