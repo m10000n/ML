@@ -48,9 +48,9 @@ class TaskDataset(Dataset):
         "2bk_places.txt",
     ]
 
-    TFMRT_TASK_FORMAT = STUDY_PREFIX + "{id}/MNINonLinear/Results/tfMRI_{task}_LR/"
-    TFMRT_FILE_FORMAT = TFMRT_TASK_FORMAT + "tfMRI_{task}_LR.nii.gz"
-    EV_FILE_FORMAT = TFMRT_TASK_FORMAT + "EVs/{ev}"
+    MRI_TASK_FORMAT = STUDY_PREFIX + "{id}/MNINonLinear/Results/tfMRI_{task}_LR/"
+    MRI_FILE_FORMAT = MRI_TASK_FORMAT + "tfMRI_{task}_LR.nii.gz"
+    EV_FILE_FORMAT = MRI_TASK_FORMAT + "EVs/{ev}"
 
     ROOT_DIR = Path(__file__).parent / "data"
     META_PATH = ROOT_DIR / "meta.json"
@@ -85,7 +85,6 @@ class TaskDataset(Dataset):
         data /= torch.amax(data)
         data[~torch.isfinite(data)] = 0
         label = self.TASKS.index(task)
-
 
         return data, label
 
@@ -204,12 +203,12 @@ class TaskDataset(Dataset):
 
         for i, subject_id in enumerate(subject_ids):
             subject_data_path = TaskDataset.ROOT_DIR / subject_id
-            temp_tfmrt_file_path = temp_path / f"temp_tfmrt_{subject_id}.nii.gz"
+            temp_mri_file_path = temp_path / f"temp_mri_{subject_id}.nii.gz"
             try:
                 for j, (task, ev) in enumerate(
                     zip(TaskDataset.TASKS, TaskDataset.TASK_EVS)
                 ):
-                    tfmrt_file_path = TaskDataset.TFMRT_FILE_FORMAT.format(
+                    mri_file_path = TaskDataset.MRI_FILE_FORMAT.format(
                         id=subject_id, task=task
                     )
                     ev_file_path = TaskDataset.EV_FILE_FORMAT.format(
@@ -219,14 +218,14 @@ class TaskDataset(Dataset):
                         aws.download(
                             client=client,
                             bucket=TaskDataset.BUCKET_NAME,
-                            file_path=tfmrt_file_path,
-                            local_file_path=temp_tfmrt_file_path,
+                            file_path=mri_file_path,
+                            local_file_path=temp_mri_file_path,
                         )
                     except FileNotFoundError:
                         continue
-                    tfmrt_file = nib.load(filename=temp_tfmrt_file_path)
-                    tfmrt = tfmrt_file.get_fdata(dtype=np.float32)
-                    tfmrt_cropped = tfmrt[
+                    mri_file = nib.load(filename=temp_mri_file_path)
+                    mri = mri_file.get_fdata(dtype=np.float32)
+                    mri_cropped = mri[
                         TaskDataset.BRAIN_BOUNDARIES[
                             "x_start"
                         ] : TaskDataset.BRAIN_BOUNDARIES["x_end"],
@@ -244,7 +243,7 @@ class TaskDataset(Dataset):
                             file_path=ev_file_path,
                         ).decode("utf-8")
                     except FileNotFoundError:
-                        os.remove(temp_tfmrt_file_path)
+                        os.remove(temp_mri_file_path)
                         continue
 
                     lines = ev_file.strip().split("\n")
@@ -261,21 +260,21 @@ class TaskDataset(Dataset):
                         end = math.ceil(
                             (onset + duration + TaskDataset.DELTA) / TaskDataset.TR
                         )
-                        tfmrt_cropped_ = tfmrt_cropped[..., start : end + 1]
+                        mri_cropped_ = mri_cropped[..., start : end + 1]
                         task_file_path = (
                             subject_task_path / f"{subject_id}_{task}_{k}.npy"
                         )
                         torch.save(
-                            obj=torch.tensor(tfmrt_cropped_, dtype=torch.float32).permute(3, 0, 1, 2),
+                            obj=torch.tensor(mri_cropped_, dtype=torch.float32).permute(3, 0, 1, 2),
                             f=task_file_path,
                         )
 
-                    os.remove(path=temp_tfmrt_file_path)
+                    os.remove(path=temp_mri_file_path)
             except BaseException:
                 if subject_data_path.exists():
                     shutil.rmtree(path=subject_data_path)
-                if temp_tfmrt_file_path.exists():
-                    os.remove(path=temp_tfmrt_file_path)
+                if temp_mri_file_path.exists():
+                    os.remove(path=temp_mri_file_path)
                 raise
 
             if subject_data_path.exists():
