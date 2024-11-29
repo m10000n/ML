@@ -14,11 +14,10 @@ from torch.utils.data import Dataset
 import helper.aws as aws
 import helper.json as json
 from helper.folder import get_files, get_folders
-from helper.system import get_max_workers
+from helper.system import get_num_physical_cores
+
 
 # dataset size for TASK_LIMIT = 1: 660 GB
-
-
 class TaskDataset(Dataset):
     SECRETE_NAME = "ConnectomeDB"
     REGION_NAME = "us-east-1"
@@ -56,14 +55,14 @@ class TaskDataset(Dataset):
     ROOT_DIR = Path(__file__).parent / "data"
     META_PATH = ROOT_DIR / "meta.json"
 
-    def __init__(self, subject_ids, transform=None):
+    def __init__(self, subject_ids, is_train=False):
         if not self.fully_downloaded():
             raise RuntimeError(
                 "Make sure to download the dataset before creating an instance."
             )
 
         self.subject_ids = subject_ids
-        self.transform = transform
+        self.is_train = is_train
 
         self.samples = []
         for subject_id in self.subject_ids:
@@ -78,12 +77,15 @@ class TaskDataset(Dataset):
     def __getitem__(self, idx):
         file_path, task = self.samples[idx]
         data = torch.load(f=file_path, weights_only=True)
-        start_idx = np.random.randint(low=0, high=data.shape[0] - self.WINDOW_WIDTH + 1)
+        if self.is_train:
+            start_idx = np.random.randint(low=0, high=data.shape[0] - self.WINDOW_WIDTH + 1)
+        else:
+            start_idx = 0
         data = data[start_idx : start_idx + self.WINDOW_WIDTH, ...]
+        data /= torch.amax(data)
+        data[~torch.isfinite(data)] = 0
         label = self.TASKS.index(task)
 
-        if self.transform:
-            data = self.transform(data)
 
         return data, label
 
@@ -103,9 +105,6 @@ class TaskDataset(Dataset):
 
     @staticmethod
     def download_dataset(num_workers=4):
-        if num_workers < 1:
-            raise RuntimeError("num_workers must at least be 1.")
-
         os.makedirs(TaskDataset.ROOT_DIR, exist_ok=True)
 
         secrete = aws.get_secret(
@@ -226,7 +225,7 @@ class TaskDataset(Dataset):
                     except FileNotFoundError:
                         continue
                     tfmrt_file = nib.load(filename=temp_tfmrt_file_path)
-                    tfmrt = tfmrt_file.get_fdata()
+                    tfmrt = tfmrt_file.get_fdata(dtype=np.float32)
                     tfmrt_cropped = tfmrt[
                         TaskDataset.BRAIN_BOUNDARIES[
                             "x_start"
@@ -304,4 +303,4 @@ class TaskDataset(Dataset):
 
 
 if __name__ == "__main__":
-    TaskDataset.download_dataset(num_workers=get_max_workers())
+    TaskDataset.download_dataset(num_workers=max(1, get_num_physical_cores() - 1))
