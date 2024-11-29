@@ -1,7 +1,6 @@
 import random
 
 import numpy as np
-from fontTools.subset import subset
 from torch.utils.data import DataLoader, DistributedSampler
 
 from data.hcp_openacces.dataset import TaskDataset
@@ -13,7 +12,7 @@ def get_loader(dataset, batch_size, shuffle, world_size=0, rank=0, num_workers=4
             "The dataset must be fully downloaded, before calling this function."
         )
 
-    if world_size == 0:
+    if world_size <= 1:
         dataloader = DataLoader(
             dataset=dataset,
             batch_size=batch_size,
@@ -30,6 +29,7 @@ def get_loader(dataset, batch_size, shuffle, world_size=0, rank=0, num_workers=4
             batch_size=batch_size,
             sampler=data_sampler,
             shuffle=False,
+            num_workers=num_workers,
             pin_memory=True
         )
 
