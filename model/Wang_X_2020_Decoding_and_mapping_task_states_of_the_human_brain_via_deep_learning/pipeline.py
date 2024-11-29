@@ -23,8 +23,16 @@ from helper.folder import create_result
 from helper.log import Log
 from helper.model import save_exp_files
 from helper.path import LOCAL_RESULT_PATH
-from model.Wang_X_2020_Decoding_and_mapping_task_states_of_the_human_brain_via_deep_learning.model import (
-    Model as Model,
+
+# import the model you want to use
+from model.Wang_X_2020_Decoding_and_mapping_task_states_of_the_human_brain_via_deep_learning.model_large import (
+    ModelLarge8 as Model,
+)
+from model.Wang_X_2020_Decoding_and_mapping_task_states_of_the_human_brain_via_deep_learning.residual import (
+    Residual,
+)
+from model.Wang_X_2020_Decoding_and_mapping_task_states_of_the_human_brain_via_deep_learning.shortcut import (
+    Shortcut,
 )
 from model.Wang_X_2020_Decoding_and_mapping_task_states_of_the_human_brain_via_deep_learning.test import (
     test as test,
@@ -33,7 +41,7 @@ from model.Wang_X_2020_Decoding_and_mapping_task_states_of_the_human_brain_via_d
     train as train,
 )
 
-EXP_NAME = "original"
+EXP_NAME = "large_8"
 NUM_WORKERS = 8
 
 EXP_RESULT_FOLDER = LOCAL_RESULT_PATH / EXP_NAME
@@ -44,6 +52,8 @@ EXP_FILES = [
         inspect.getfile(Model),
         MODEL_FILE_NAME.format(exp_name=EXP_NAME),
     ),
+    (inspect.getfile(Residual), "residual_block.py"),
+    (inspect.getfile(Shortcut), "shortcut_block.py"),
     (Path(__file__), PIPELINE_FILE_NAME.format(exp_name=EXP_NAME)),
     (
         inspect.getfile(train),

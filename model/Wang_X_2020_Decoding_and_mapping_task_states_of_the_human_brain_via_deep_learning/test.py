@@ -10,7 +10,7 @@ from helper.model import get_pu
 def test(rank, world_size, model_class, dataset, num_workers, model_path, log):
     if rank == 0:
         print(
-            f"----->>> Start testing. Available GPUs: {world_size} | Workers: {num_workers} <<<-----"
+            f"----->>> Start testing. Model: {model_class.__name__} | Available GPUs: {world_size} | Workers: {num_workers} <<<-----"
         )
 
     multi_gpu = world_size > 1
