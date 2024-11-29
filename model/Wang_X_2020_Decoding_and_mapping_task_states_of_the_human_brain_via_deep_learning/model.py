@@ -90,14 +90,8 @@ class Model(nn.Module):
         for m in self.modules():
             if isinstance(m, nn.Conv3d):
                 nn.init.xavier_uniform_(m.weight, gain=nn.init.calculate_gain("relu"))
-                if m.bias is not None:
-                    m.bias.data.zero_()
-            elif isinstance(m, nn.BatchNorm3d):
-                m.weight.data.fill_(1)
-                m.bias.data.zero_()
             elif isinstance(m, nn.Linear):
                 m.weight.data.normal_(0, 0.01)
-                m.bias.data.zero_()
 
     def forward(self, x):
         x = self.conv1(x)
