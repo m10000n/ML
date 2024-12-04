@@ -69,9 +69,9 @@ def to_train():
     destination = f"{USER}@{HOST}:{REMOTE_BASE_DIR}"
     rsync_command.append(destination)
 
-    print("----->>Start transfer to training server<<-----")
+    print("----->>> Start transfer to training server. <<<-----")
     transfer(rsync_command)
-    print("----->>Finished transfer to training server<<-----")
+    print("----->>> Finished transfer to training server. <<<-----")
 
 
 def from_train():
@@ -95,9 +95,9 @@ def from_train():
 
     rsync_command.append(LOCAL_BASE_DIR)
 
-    print("----->>Start transfer from training server<<-----")
+    print("----->>> Start transfer from training server. <<<-----")
     transfer(rsync_command=rsync_command)
-    print("----->>Finished transfer from training server<<-----")
+    print("----->>> Finished transfer from training server <<<-----")
 
 
 if __name__ == "__main__":

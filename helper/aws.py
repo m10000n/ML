@@ -51,23 +51,6 @@ def get_content(client, bucket, folder_path="", verbose=False):
     return files, folders
 
 
-def file_exists(client, bucket, file_path):
-    try:
-        client.head_object(Bucket=bucket, Key=str(file_path))
-        return True
-    except ClientError as e:
-        if e.response["Error"]["Code"] == "404":
-            return False
-        raise
-
-
-def files_exist(client, bucket, file_paths):
-    return [
-        file_exists(client=client, bucket=bucket, file_path=str(file_path))
-        for file_path in file_paths
-    ]
-
-
 def get_file(client, bucket, file_path):
     try:
         response = client.get_object(Bucket=bucket, Key=str(file_path))

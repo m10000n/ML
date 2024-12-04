@@ -12,6 +12,6 @@ fi
 INSTANCE_ID=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s http://169.254.169.254/latest/meta-data/instance-id)
 REGION=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s http://169.254.169.254/latest/meta-data/placement/region)
 
-echo "----->>>Stopping instance<<<-----"
+echo "----->>> Stopping instance. <<<-----"
 sudo pkill -HUP sshd
 aws ec2 stop-instances --instance-ids "$INSTANCE_ID" --region "$REGION" $DRY_RUN

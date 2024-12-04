@@ -19,6 +19,7 @@ class Log:
         self.loss = {"train": [], "val": [], "test": -1}
         self.accuracy = {"val": [], "test": -1}
         self.confusion = {"predicted": [], "actual": []}
+        self.debug = {}
         self.update()
 
     def set_dataset_ids(self, ids):
@@ -54,6 +55,7 @@ class Log:
             "accuracy": self.accuracy,
             "confusion": self.confusion,
             "data": self.data,
+            "debug": self.debug,
         }
         json.write(file_path=self.file_path, data=data)
 
