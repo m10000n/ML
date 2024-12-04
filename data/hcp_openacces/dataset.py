@@ -77,13 +77,15 @@ class TaskDataset(Dataset):
     def __getitem__(self, idx):
         file_path, task = self.samples[idx]
         data = torch.load(f=file_path, weights_only=True)
+
         if self.is_train:
             start_idx = np.random.randint(low=0, high=data.shape[0] - self.WINDOW_WIDTH + 1)
         else:
             start_idx = 0
+
         data = data[start_idx : start_idx + self.WINDOW_WIDTH, ...]
-        data /= torch.amax(data)
-        data[~torch.isfinite(data)] = 0
+        data = (data - torch.mean(data)) / torch.std(data)
+
         label = self.TASKS.index(task)
 
         return data, label
