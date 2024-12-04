@@ -14,11 +14,11 @@ source $TO_TRAIN
 ssh -i "$IDENTITY_FILE" -p "$PORT" "$USER"@"$HOST" -T << EOF
 set -e
 if tmux has-session -t my_session 2>/dev/null; then
-  echo '----->Cannot run model on server. There is already an existing tmux session<-----'
+  echo '----->>> Cannot run the model on the server. There is already an existing tmux session. <<<-----'
 else
-  echo '----->Starting a new tmux session<-----'
+  echo '----->>> Starting a new tmux session. <<<-----'
   tmux new-session -d -s my_session
-  tmux send-keys -t my_session "clear; $ACTIVATE_ENV && echo $INFO && $RUN_MODEL; $STOP_AWS; bash" C-m
-  echo '----->Model runs on server.<-----'
+  tmux send-keys -t my_session "clear; $ACTIVATE_ENV && echo $INFO && $RUN_MODEL; $STOP_AWS" C-m
+  echo '----->>> Model runs on server. <<<-----'
 fi
 EOF

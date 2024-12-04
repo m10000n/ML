@@ -1,15 +1,18 @@
 import os.path
 
+from helper.path import LOCAL_RESULT_PATH
 
-def create_results(model_path, model_name):
-    results_path = model_path / "results"
-    model_path = results_path / model_name
 
-    os.makedirs(name=results_path, exist_ok=True)
-    os.makedirs(name=model_path, exist_ok=True)
+def create_result(exp_name):
+    model_result_path = LOCAL_RESULT_PATH / exp_name
 
-    if has_content(model_path):
+    os.makedirs(name=LOCAL_RESULT_PATH, exist_ok=True)
+    os.makedirs(name=model_result_path, exist_ok=True)
+
+    if has_content(model_result_path):
         raise FileExistsError("There are already files in the models results folder.")
+
+    os.makedirs(name=model_result_path / "files", exist_ok=True)
 
 
 def has_content(path):

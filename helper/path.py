@@ -11,6 +11,11 @@ MODEL_PATH = Path("model") / MODEL
 LOCAL_MODEL_PATH = LOCAL_BASE_DIR / MODEL_PATH
 REMOTE_MODEL_PATH = REMOTE_BASE_DIR / MODEL_PATH
 
+RESULT_PATH = MODEL_PATH / "result"
+LOCAL_RESULT_PATH = LOCAL_BASE_DIR / RESULT_PATH
+REMOTE_RESULT_PATH = REMOTE_BASE_DIR / RESULT_PATH
+
+
 DATALOADER_PATH = Path("data")
 LOCAL_DATALOADER_PATH = LOCAL_BASE_DIR / DATALOADER_PATH
 REMOTE_DATALOADER_PATH = REMOTE_BASE_DIR / DATALOADER_PATH
@@ -51,6 +56,9 @@ if __name__ == "__main__":
         "model": MODEL_PATH,
         "local_model": LOCAL_MODEL_PATH,
         "remote_model": REMOTE_MODEL_PATH,
+        "result": RESULT_PATH,
+        "local_result": LOCAL_RESULT_PATH,
+        "remote_result": REMOTE_RESULT_PATH,
         "dataloader": DATALOADER_PATH,
         "local_dataloader": LOCAL_DATALOADER_PATH,
         "remote_dataloader": REMOTE_DATALOADER_PATH,

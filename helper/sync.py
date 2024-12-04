@@ -11,9 +11,7 @@ from helper.path import (
     LOCAL_DATASET_PATH,
     LOCAL_HELPER_PATH,
     LOCAL_MODEL_PATH,
-    LOCAL_TEMP_PATH,
-    MODEL_PATH,
-    TEMP_PATH,
+    RESULT_PATH,
     get_file_paths_in_folder,
 )
 
@@ -52,7 +50,6 @@ def to_train():
         LOCAL_CONFIG_PATH,
         *get_file_paths_in_folder(LOCAL_MODEL_PATH),
         *get_file_paths_in_folder(LOCAL_DATALOADER_PATH),
-        *get_file_paths_in_folder(LOCAL_TEMP_PATH),
     ]
 
     if INCLUDE_DATASET:
@@ -72,9 +69,9 @@ def to_train():
     destination = f"{USER}@{HOST}:{REMOTE_BASE_DIR}"
     rsync_command.append(destination)
 
-    print("----->>Start transfer to training server<<-----")
+    print("----->>> Start transfer to training server. <<<-----")
     transfer(rsync_command)
-    print("----->>Finished transfer to training server<<-----")
+    print("----->>> Finished transfer to training server. <<<-----")
 
 
 def from_train():
@@ -87,21 +84,20 @@ def from_train():
         f"ssh -p {PORT} -i {IDENTITY_FILE}",
     ]
 
-    dependencies = [MODEL_PATH / "results", TEMP_PATH / "results"]
+    dependencies = [RESULT_PATH]
     dependencies = [
         # cast is important otherwise pathlib gets rid of '.'
         f"{USER}@{HOST}:{REMOTE_BASE_DIR}/./{dependency}"
         for dependency in dependencies
-        if dependency.is_dir()
-        or (dependency.is_file() and dependency not in EXCLUDED_FILES)
     ]
+
     rsync_command.extend(dependencies)
 
     rsync_command.append(LOCAL_BASE_DIR)
 
-    print("----->>Start transfer from training server<<-----")
+    print("----->>> Start transfer from training server. <<<-----")
     transfer(rsync_command=rsync_command)
-    print("----->>Finished transfer from training server<<-----")
+    print("----->>> Finished transfer from training server <<<-----")
 
 
 if __name__ == "__main__":

@@ -1,3 +1,2 @@
 alias attach="tmux attach-session -t my_session"
 alias gpu_usage="watch -n 1 nvidia-smi"
-alias cpu_usage="htop"
