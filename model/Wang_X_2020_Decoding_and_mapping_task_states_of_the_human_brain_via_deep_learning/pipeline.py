@@ -25,8 +25,8 @@ from helper.model import save_exp_files
 from helper.path import LOCAL_RESULT_PATH
 
 # import the model you want to use
-from model.Wang_X_2020_Decoding_and_mapping_task_states_of_the_human_brain_via_deep_learning.model_large import (
-    ModelLarge8 as Model,
+from model.Wang_X_2020_Decoding_and_mapping_task_states_of_the_human_brain_via_deep_learning.model import (
+    Model as Model,
 )
 from model.Wang_X_2020_Decoding_and_mapping_task_states_of_the_human_brain_via_deep_learning.residual import (
     Residual,
@@ -41,7 +41,7 @@ from model.Wang_X_2020_Decoding_and_mapping_task_states_of_the_human_brain_via_d
     train as train,
 )
 
-EXP_NAME = "large_8"
+EXP_NAME = "original"
 NUM_WORKERS = 8
 
 EXP_RESULT_FOLDER = LOCAL_RESULT_PATH / EXP_NAME

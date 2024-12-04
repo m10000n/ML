@@ -7,7 +7,7 @@ from model.Wang_X_2020_Decoding_and_mapping_task_states_of_the_human_brain_via_d
 )
 
 
-# Trainable params: 3,981,601; rep = 0 <=> Model
+# Trainable params: 3,981,601
 class ModelLarge(nn.Module):
     def __init__(self, rep=1):
         super(ModelLarge, self).__init__()
@@ -51,14 +51,14 @@ class ModelLarge(nn.Module):
         self.drop_out = nn.Dropout()
         self.fc2 = nn.Linear(64, 7)
 
-        self.init_weights()
+        self._init_weights()
 
-    def init_weights(self):
+    def _init_weights(self):
         for m in self.modules():
-            if isinstance(m, nn.Conv3d):
-                nn.init.xavier_uniform_(m.weight, gain=nn.init.calculate_gain("relu"))
-            elif isinstance(m, nn.Linear):
-                m.weight.data.normal_(0, 0.01)
+            if isinstance(m, nn.Conv3d) or isinstance(m, nn.Linear):
+                nn.init.kaiming_normal_(m.weight, mode="fan_in", nonlinearity="relu")
+                if m.bias is not None:
+                    nn.init.zeros_(m.bias)
 
     def forward(self, x):
         x = self.conv1(x)

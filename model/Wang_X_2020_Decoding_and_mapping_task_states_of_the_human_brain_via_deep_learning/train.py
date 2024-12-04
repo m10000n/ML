@@ -51,7 +51,8 @@ def train(rank, world_size, model_class, datasets, num_workers, model_path, log)
     n_val = len(val_loader.dataset)
 
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(params=model.parameters(), lr=0.001, betas=(0.9, 0.999))
+    # no convergence with learning rate = 0.001
+    optimizer = optim.Adam(params=model.parameters(), lr=0.00001, betas=(0.9, 0.999))
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(
         optimizer=optimizer, mode="min", factor=0.1, patience=15
     )
@@ -82,9 +83,13 @@ def train(rank, world_size, model_class, datasets, num_workers, model_path, log)
         for i_batch, (data, labels) in enumerate(train_loader):
             if rank == 0:
                 sys.stdout.write(
-                    f"\repoch: {epoch + 1} | batch: {i_batch + 1}/{n_train_batches} | learning rate: {lr}"
+                    f"\repoch: {epoch + 1} | batch: {i_batch + 1}/{n_train_batches} | learning rate: {lr:.0e}"
                 )
                 sys.stdout.flush()
+
+            log.debug[f"{epoch}_{i_batch}"] = (
+                f"mean: {torch.mean(data[0])} | std: {torch.std(data[0])}"
+            )
 
             data = data.to(pu, non_blocking=True)
             labels = labels.to(pu, non_blocking=True)

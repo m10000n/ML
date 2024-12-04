@@ -31,9 +31,9 @@ class Model(nn.Module):
         self.fc1 = nn.Linear(64, 64)
         self.fc2 = nn.Linear(64, 7)
 
-        self.init_weights()
+        self._init_weights()
 
-    def init_weights(self):
+    def _init_weights(self):
         for m in self.modules():
             if isinstance(m, nn.Conv3d):
                 nn.init.xavier_uniform_(m.weight, gain=nn.init.calculate_gain("relu"))
