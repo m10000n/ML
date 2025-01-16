@@ -1,8 +1,8 @@
 import argparse
 
-MODEL = ""
+MODEL = "Wang"
 
-DATASET = ""
+DATASET = "hcp_openacces"
 
 if not MODEL:
     raise ValueError("You have not specified the current model.")
