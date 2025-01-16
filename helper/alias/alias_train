@@ -1,0 +1,7 @@
+alias gpu_usage="watch -n 1 nvidia-smi"
+alias cpu_usage="htop"
+
+alias download_dataset="download_dataset.sh"
+alias run_model="run_model.sh"
+alias attach="tmux.sh attach"
+alias kill_tmux="tmux.sh kill_session"

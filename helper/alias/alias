@@ -1,0 +1,16 @@
+alias create_env="environment.sh create"
+alias update_env="environment.sh update"
+
+alias format="format.sh"
+
+alias to_train="sync.sh to_train"
+alias from_train="sync.sh from_train"
+
+alias setup_train="setup_train.sh"
+
+alias download_dataset="ssh.sh download_dataset"
+alias run_model="ssh.sh run_model"
+alias attach="ssh.sh attach"
+alias kill_tmux="ssh.sh kill_tmux"
+
+alias plot="python -m helper.plot"
