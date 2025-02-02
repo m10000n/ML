@@ -1,8 +1,8 @@
 import argparse
 
-MODEL = ""
+MODEL = "model/Vaswani_Transformer"
 
-DATASET = ""
+DATASET = "opus_books"
 
 if not MODEL:
     raise ValueError("You have not specified the current model.")

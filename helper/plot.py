@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import torch
-from data.hcp_openacces.dataset import TaskDataset
 
 from config.exp_file_names import (
     CONFUSION_PLOT_FILE_NAME,
@@ -8,6 +7,7 @@ from config.exp_file_names import (
     LOG_LOSS_ACCURACY_PLOT_FILE_NAME,
     LOSS_ACCURACY_PLOT_FILE_NAME,
 )
+from data.hcp_openacces.dataset import TaskDataset
 from helper.log import Log
 from helper.path import RESULT_PATH_A
 

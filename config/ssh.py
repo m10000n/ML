@@ -1,9 +1,9 @@
 import argparse
 
-HOST = ""
-PORT = -1
-USER = ""
-IDENTITY_FILE = ""
+HOST = "a"
+PORT = 1
+USER = "a"
+IDENTITY_FILE = "a"
 
 if not HOST:
     raise ValueError("You have not specified the host.")

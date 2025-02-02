@@ -1,5 +1,6 @@
 import argparse
 from pathlib import Path
+import inspect
 
 from config.config import DATASET, MODEL
 from config.transfer import REMOTE_BASE_DIR
@@ -39,9 +40,36 @@ ENV_PATH_R = HELPER_PATH_R / "env"
 ENV_PATH_A = BASE_DIR / ENV_PATH_R
 ENV_PATH_REMOTE = BASE_DIR_REMOTE / ENV_PATH_R
 
-
+# ToDo: replace with
 def get_file_paths_in_folder(folder):
     return [file for file in Path(folder).glob("*") if file.is_file()]
+
+def file_path() -> Path:
+    return Path(inspect.stack()[1].filename).resolve()
+
+def dir_path() -> Path:
+    return Path(inspect.stack()[1].filename).resolve().parent
+
+def exists(path_: Path) -> bool:
+    return path_.exists()
+
+def has_content(path_: Path):
+    return path_.exists() and any(path_.iterdir())
+
+def get_content(path_: Path) -> [Path]:
+    return sorted([item for item in path_.iterdir()])
+
+def get_files(path_):
+    return sorted([item for item in path_.iterdir() if item.is_file()])
+
+def get_folders(path_):
+    return sorted([item for item in path_.iterdir() if item.is_dir()])
+
+
+
+
+
+
 
 
 if __name__ == "__main__":
