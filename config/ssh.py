@@ -1,36 +1,50 @@
 import argparse
 
-HOST = ""
-PORT = -1
-USER = ""
-IDENTITY_FILE = ""
+_HOST: str = "3.227.240.27"
+_PORT: int = 22
+_USER: str = "ec2-user"
+_IDENTITY_FILE: str = "/Users/mg/.ssh/aws"
 
-if not HOST:
-    raise ValueError("You have not specified the host.")
 
-if not PORT:
-    raise ValueError("You have not specified the port.")
+class Ssh:
+    @staticmethod
+    def host() -> str:
+        if not _HOST:
+            raise ValueError("Host not specified.")
+        return _HOST
 
-if not USER:
-    raise ValueError("You have not specified the user.")
+    @staticmethod
+    def port() -> int:
+        if not _PORT:
+            raise ValueError("Port not specified.")
+        return _PORT
 
-if not IDENTITY_FILE:
-    raise ValueError("You have not specified the path to the identity file.")
+    @staticmethod
+    def user() -> str:
+        if not _USER:
+            raise ValueError("User not specified.")
+        return _USER
+
+    @staticmethod
+    def identity_file() -> str:
+        if not _IDENTITY_FILE:
+            raise ValueError("Path to identity file not specified.")
+        return _IDENTITY_FILE
 
 
 if __name__ == "__main__":
     commands = {
-        "host": HOST,
-        "port": PORT,
-        "user": USER,
-        "identity_file": IDENTITY_FILE,
+        "host": Ssh.host,
+        "port": Ssh.port,
+        "user": Ssh.user,
+        "identity_file": Ssh.identity_file,
     }
 
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "command",
-        choices=list(commands.keys()),
+        choices=commands.keys(),
     )
-    args = parser.parse_args()
+    command = parser.parse_args().command
 
-    print(commands[args.command])
+    print(commands[command]())

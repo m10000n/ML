@@ -1,84 +1,122 @@
 import argparse
-from pathlib import Path
+import inspect
+from pathlib import Path as PathlibPath
 
-from config.config import DATASET, MODEL
-from config.transfer import REMOTE_BASE_DIR
-
-BASE_DIR = Path(__file__).parent.parent
-BASE_DIR_REMOTE = Path(REMOTE_BASE_DIR)
-
-MODEL_PATH_R = Path("model") / MODEL
-MODEL_PATH_A = BASE_DIR / MODEL_PATH_R
-MODEL_PATH_REMOTE = BASE_DIR_REMOTE / MODEL_PATH_R
-
-RESULT_PATH_R = MODEL_PATH_R / "result"
-RESULT_PATH_A = BASE_DIR / RESULT_PATH_R
-RESULT_PATH_REMOTE = BASE_DIR_REMOTE / RESULT_PATH_R
-
-DATALOADER_PATH_R = Path("data")
-DATALOADER_PATH_A = BASE_DIR / DATALOADER_PATH_R
-DATALOADER_PATH_REMOTE = BASE_DIR_REMOTE / DATALOADER_PATH_R
-
-DATASET_PATH_R = DATALOADER_PATH_R / DATASET
-DATASET_PATH_A = BASE_DIR / DATASET_PATH_R
-DATASET_PATH_REMOTE = BASE_DIR_REMOTE / DATASET_PATH_R
-
-CONFIG_PATH_R = Path("config")
-CONFIG_PATH_A = BASE_DIR / CONFIG_PATH_R
-CONFIG_PATH_REMOTE = BASE_DIR_REMOTE / CONFIG_PATH_R
-
-HELPER_PATH_R = Path("helper")
-HELPER_PATH_A = BASE_DIR / HELPER_PATH_R
-HELPER_PATH_REMOTE = BASE_DIR_REMOTE / HELPER_PATH_R
-
-SHELL_PATH_R = HELPER_PATH_R / "shell"
-SHELL_PATH_A = BASE_DIR / SHELL_PATH_R
-SHELL_PATH_REMOTE = BASE_DIR_REMOTE / SHELL_PATH_R
-
-ENV_PATH_R = HELPER_PATH_R / "env"
-ENV_PATH_A = BASE_DIR / ENV_PATH_R
-ENV_PATH_REMOTE = BASE_DIR_REMOTE / ENV_PATH_R
+from config.config import Config
 
 
-def get_file_paths_in_folder(folder):
-    return [file for file in Path(folder).glob("*") if file.is_file()]
+class Path:
+    # make absolute
+    @staticmethod
+    def _make_absolute(path: PathlibPath) -> PathlibPath:
+        return Path.project_root(absolute=True) / path
+
+    # project root
+    @staticmethod
+    def project_root(absolute: bool = True) -> PathlibPath:
+        return PathlibPath(__file__).parent.parent if absolute else PathlibPath()
+
+    # config
+    @staticmethod
+    def config(absolute: bool = False) -> PathlibPath:
+        path = PathlibPath("config")
+        return Path._make_absolute(path) if absolute else path
+
+    # model
+    @staticmethod
+    def model(absolute: bool = False) -> PathlibPath:
+        path = PathlibPath("model") / Config.model()
+        return Path._make_absolute(path) if absolute else path
+
+    @staticmethod
+    def result(absolute: bool = False) -> PathlibPath:
+        path = Path.model() / "result"
+        return Path._make_absolute(path) if absolute else path
+
+    # data
+    @staticmethod
+    def dataset(absolute: bool = False) -> PathlibPath:
+        path = PathlibPath("data") / Config.dataset()
+        return Path._make_absolute(path) if absolute else path
+
+    @staticmethod
+    def data(absolute: bool = False) -> PathlibPath:
+        path = Path.dataset() / "data"
+        return Path._make_absolute(path) if absolute else path
+
+    # helper
+    @staticmethod
+    def helper(absolute: bool = False) -> PathlibPath:
+        path = PathlibPath("helper")
+        return Path._make_absolute(path) if absolute else path
+
+    @staticmethod
+    def shell(absolute: bool = False) -> PathlibPath:
+        path = Path.helper() / "shell"
+        return Path._make_absolute(path) if absolute else path
+
+    @staticmethod
+    def env(absolute: bool = False) -> PathlibPath:
+        path = Path.helper() / "env"
+        return Path._make_absolute(path) if absolute else path
+
+    # path functions
+    @staticmethod
+    def file_path() -> PathlibPath:
+        return PathlibPath(inspect.stack()[1].filename).resolve()
+
+    @staticmethod
+    def dir_path() -> PathlibPath:
+        return PathlibPath(inspect.stack()[1].filename).resolve().parent
+
+    @staticmethod
+    def exists(path: PathlibPath) -> bool:
+        return path.exists()
+
+    @staticmethod
+    def has_content(path: PathlibPath) -> bool:
+        return path.exists() and any(path.iterdir())
+
+    @staticmethod
+    def get_content(path: PathlibPath) -> list[PathlibPath]:
+        return sorted([item for item in path.iterdir()])
+
+    @staticmethod
+    def get_files(path: PathlibPath) -> list[PathlibPath]:
+        return sorted([item for item in path.iterdir() if item.is_file()])
+
+    @staticmethod
+    def get_folders(path: PathlibPath) -> list[PathlibPath]:
+        return sorted([item for item in path.iterdir() if item.is_dir()])
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "path",
-        choices=[
-            "base_dir",
-            "model",
-            "result",
-            "dataloader",
-            "dataset",
-            "config",
-            "helper",
-            "shell",
-            "env",
-        ],
-    )
-    parser.add_argument("option", choices=["a", "r", "rmt", "m"])
-    args = parser.parse_args()
+    paths = {
+        "project_root": Path.project_root,
+        "config": Path.config,
+        "model": Path.model,
+        "result": Path.result,
+        "dataset": Path.dataset,
+        "data": Path.data,
+        "helper": Path.helper,
+        "shell": Path.shell,
+        "env": Path.env,
+    }
 
-    if args.path == "base_dir":
-        if args.option == "a":
-            print(BASE_DIR)
-        elif args.option == "r":
-            print("./")
-        elif args.option == "rmt":
-            print(BASE_DIR_REMOTE)
-        elif args.option == "m":
-            print("")
-    else:
-        path = args.path.upper() + "_PATH"
-        if args.option == "a":
-            print(globals()[path + "_A"])
-        elif args.option == "r":
-            print(globals()[path + "_R"])
-        elif args.option == "rmt":
-            print(globals()[path + "_REMOTE"])
-        elif args.option == "m":
-            print(str(globals()[path + "_R"]).replace("/", "."))
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("path", choices=paths.keys())
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("-r", "--relative", action="store_true")
+    group.add_argument("-a", "--absolute", action="store_true")
+    group.add_argument("-m", "--module", action="store_true")
+
+    args = parser.parse_args()
+    path_ = paths[args.path]
+
+    if args.relative:
+        print(path_(absolute=False))
+    elif args.absolute:
+        print(path_(absolute=True))
+    elif args.module:
+        print(path_(absolute=False).replace("/", "."))

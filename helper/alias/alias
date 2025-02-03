@@ -1,10 +1,12 @@
-alias create_env="environment.sh create"
-alias update_env="environment.sh update"
+alias create_env="env.sh create"
+alias update_env="env.sh update"
 
 alias format="format.sh"
 
-alias to_train="sync.sh to_train"
-alias from_train="sync.sh from_train"
+alias to_server="sync.sh to_train"
+alias copy_result="sync.sh copy_result"
+
+alias setup="setup.sh"
 
 alias setup_train="setup_train.sh"
 

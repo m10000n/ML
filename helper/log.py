@@ -2,7 +2,7 @@ import os
 import stat
 from datetime import datetime
 
-from helper import json, system
+from helper import system
 
 
 class Log:

@@ -1,27 +1,35 @@
 import argparse
 
-MODEL = ""
+_MODEL = "Wang"
 
-DATASET = ""
+_DATASET = ""
 
-if not MODEL:
-    raise ValueError("You have not specified the current model.")
 
-if not DATASET:
-    raise ValueError("You have not specified the current dataset.")
+class Config:
+    @staticmethod
+    def model() -> str:
+        if not _MODEL:
+            raise ValueError("Model not specified.")
+        return _MODEL
+
+    @staticmethod
+    def dataset() -> str:
+        if not _DATASET:
+            raise ValueError("Dataset not specified.")
+        return _DATASET
 
 
 if __name__ == "__main__":
     commands = {
-        "model": MODEL,
-        "dataset": DATASET,
+        "model": Config.model,
+        "dataset": Config.dataset,
     }
 
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "command",
-        choices=list(commands.keys()),
+        choices=commands.keys(),
     )
-    args = parser.parse_args()
+    command = parser.parse_args().command
 
-    print(commands[args.command])
+    print(commands[command]())

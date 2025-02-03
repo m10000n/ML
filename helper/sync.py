@@ -2,18 +2,10 @@ import argparse
 import subprocess
 import sys
 
-from config.ssh import HOST, IDENTITY_FILE, PORT, USER
-from config.transfer import EXCLUDED_FILES, INCLUDE_DATASET, REMOTE_BASE_DIR
-from helper.path import (
-    BASE_DIR,
-    CONFIG_PATH_A,
-    DATALOADER_PATH_A,
-    DATASET_PATH_A,
-    HELPER_PATH_A,
-    MODEL_PATH_A,
-    RESULT_PATH_R,
-    get_file_paths_in_folder,
-)
+from config.ssh import Ssh
+from config.transfer import Transfer
+from helper.path import Path
+from helper.print import print_end, print_start
 
 
 def transfer(rsync_command):
@@ -40,73 +32,56 @@ def to_train():
         "rsync",
         "-av",
         "--progress",
-        "--relative",
         "-e",
-        f"ssh -p {PORT} -i {IDENTITY_FILE}",
+        f"ssh -p {Ssh.port()} -i {Ssh.identity_file()}",
     ]
+
+    excluded_paths = Transfer.excluded_paths()
+
+    if not Transfer.include_dataset():
+        excluded_paths.append("data/**/data")
+
+    if not Transfer.include_result():
+        excluded_paths.append("model/**/result")
+
+    excluded_paths.extend([".gitignore", ".git"])
+
     rsync_command.extend(
-        [f"--exclude={excluded_file}" for excluded_file in EXCLUDED_FILES]
+        [f"--exclude={excluded_path}" for excluded_path in excluded_paths]
     )
 
-    dependencies = [
-        HELPER_PATH_A,
-        CONFIG_PATH_A,
-        *get_file_paths_in_folder(MODEL_PATH_A),
-        *get_file_paths_in_folder(DATALOADER_PATH_A),
-    ]
+    rsync_command.append(f"{Path.project_root()}/")
 
-    if INCLUDE_DATASET:
-        dependencies.append(DATASET_PATH_A)
-    else:
-        dependencies.extend(get_file_paths_in_folder(DATASET_PATH_A))
+    rsync_command.append(f"{Ssh.user()}@{Ssh.host()}:{Transfer.remote_project_root()}")
 
-    dependencies = [
-        # cast is important otherwise pathlib gets rid of '.'
-        f"{BASE_DIR}/./{dependency.relative_to(BASE_DIR)}"
-        for dependency in dependencies
-    ]
-    rsync_command.extend(dependencies)
-
-    destination = f"{USER}@{HOST}:{REMOTE_BASE_DIR}"
-    rsync_command.append(destination)
-
-    print("----->>> Start transfer to training server. <<<-----")
+    print_start(text="Start transfer to server.")
     transfer(rsync_command)
-    print("----->>> Finished transfer to training server. <<<-----")
+    print_end(text="Finished transfer to server.")
 
 
-def from_train():
+def copy_result():
     rsync_command = [
         "rsync",
         "-av",
         "--progress",
         "--relative",
         "-e",
-        f"ssh -p {PORT} -i {IDENTITY_FILE}",
-    ]
-
-    dependencies = [RESULT_PATH_R]
-    dependencies = [
+        f"ssh -p {Ssh.port()} -i {Ssh.identity_file()}",
         # cast is important otherwise pathlib gets rid of '.'
-        f"{USER}@{HOST}:{REMOTE_BASE_DIR}/./{dependency}"
-        for dependency in dependencies
+        f"{Ssh.user()}@{Ssh.host()}:{Transfer.remote_project_root()}/./{Path.result()}",
+        Path.project_root(),
     ]
 
-    rsync_command.extend(dependencies)
-
-    rsync_command.append(BASE_DIR)
-
-    print("----->>> Start transfer from training server. <<<-----")
+    print_start(text="Start copying results from server.")
     transfer(rsync_command=rsync_command)
-    print("----->>> Finished transfer from training server <<<-----")
+    print_end(text="Finished copying results from server.")
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Transfer of files")
-    parser.add_argument("command", choices=["to_train", "from_train"])
-    args = parser.parse_args()
+    commands = {"to_train": to_train, "copy_result": copy_result}
 
-    if args.command == "to_train":
-        to_train()
-    if args.command == "from_train":
-        from_train()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("command", choices=commands.keys())
+    command = parser.parse_args().command
+
+    commands[command]()

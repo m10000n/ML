@@ -1,9 +1,6 @@
 ## Setup
 in root directory of this project:  
-`chmod -R +x helper/shell`  
-`source ./helper/alias/alias`  
-`export PYTHONPATH="$(pwd):$PYTHONPATH"`  
-`export PATH="$(pwd)/helper/shell:$PATH"`
+`source ./helper/shell/start.sh`
 
 ### Anaconda environment
 change environment name in */helper/env/env.yml*  
