@@ -1,0 +1,47 @@
+experiment name: resnet4d_101_bn__unp__01.0
+experiment description: lr: 3e-4, weight decay: 1e-3, warmup: 1000 steps, eta_min: 3e-6, batch size: 16, batch accum.: 4
+status: done
+model description: ResNet4D-101 bottleneck, late stride
+dataset description: normalization: mean_std_file, window width: 27, time augmentation: True, spatial augmentation: 5, 5, 0.1
+data description: HCP 1200; mode: unprocessed, subjects: 1.00, pe: LR+RL, subtask_limit: None, min volumes: 27
+
+training duration: 38h 27m 27s
+test duration: 0h 6m 9s
+total duration: 38h 33m 36s
+spend loading: 70.06%
+
+number of epochs: 94
+model saved at epoch: 73
+lowest training loss: 0.0196 (epoch: 92)
+lowest validation loss: 0.1703 (epoch: 73)
+highest validation accuracy: 0.9531 (epoch: 86)
+strict evaluation: False
+accuracy: 0.9529
+balanced accuracy: 0.9492
+macro f1 score: 0.9494
+weighted f1 score: 0.9528
+
+dataset split: [0.7, 0.1, 0.2]
+dataset metadata:
+	Number of subjects: 1095 (18)
+	Number of all subtasks: 34926 (2132)
+	Total file size: ~1761.244 GB
+		EMOTION: 4188 (2094)
+			fear: 4188 (2094)
+		GAMBLING: 4344 (0)
+			loss: 4344 (0)
+		LANGUAGE: 8374 (34)
+			present_story: 8374 (34)
+		MOTOR: 4334 (0)
+			rh: 4334 (0)
+		RELATIONAL: 6256 (2)
+			relation: 6256 (2)
+		SOCIAL: 5258 (1)
+			mental: 5258 (1)
+		WM: 2172 (1)
+			2bk_places: 2172 (1)
+	Phase encodings:
+		LR: 17951 (1081)
+		RL: 16975 (1051)
+	Mode: unprocessed
+	Subtask limit: None

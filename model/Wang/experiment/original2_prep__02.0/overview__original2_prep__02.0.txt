@@ -1,0 +1,47 @@
+experiment name: original2_prep__02.0
+experiment description: original hyperparameters
+status: done
+model description: prepcoressed fMRIs
+dataset description: normalization: mean_std_voxel_window, window width: 27, time augmentation: True
+data description: HCP 1200; mode: preprocessed, subjects: 1.00, pe: LR+RL, subtask_limit: None, min volumes: 27
+
+training duration: 8h 43m 45s
+test duration: 0h 2m 58s
+total duration: 8h 46m 43s
+spend loading: 39.25%
+
+number of epochs: 44
+model saved at epoch: 13
+lowest training loss: 0.0026 (epoch: 42)
+lowest validation loss: 0.2035 (epoch: 13)
+highest validation accuracy: 0.9578 (epoch: 43)
+strict evaluation: False
+accuracy: 0.9448
+balanced accuracy: 0.9437
+macro f1 score: 0.9414
+weighted f1 score: 0.9452
+
+dataset split: [0.7, 0.1, 0.2]
+dataset metadata:
+	Number of subjects: 1095 (18)
+	Number of all subtasks: 34927 (2131)
+	Total file size: ~3247.204 GB
+		EMOTION: 4188 (2094)
+			fear: 4188 (2094)
+		GAMBLING: 4344 (0)
+			loss: 4344 (0)
+		LANGUAGE: 8374 (34)
+			present_story: 8374 (34)
+		MOTOR: 4334 (0)
+			rh: 4334 (0)
+		RELATIONAL: 6256 (2)
+			relation: 6256 (2)
+		SOCIAL: 5258 (1)
+			mental: 5258 (1)
+		WM: 2173 (0)
+			2bk_places: 2173 (0)
+	Phase encodings:
+		LR: 17952 (1080)
+		RL: 16975 (1051)
+	Mode: preprocessed
+	Subtask limit: None

@@ -1,0 +1,47 @@
+experiment name: inceptron__prep__00.2
+experiment description: lr: 3e-4, weight decay: 1e-3, warmup: 1000 steps, eta_min: 3e-6, batch size: 16, batch accum.: 4
+status: done
+model description: 
+dataset description: normalization: mean_std_voxel_file, window width: 27, time augmentation: True
+data description: HCP 1200; mode: preprocessed, subjects: 1.00, pe: LR+RL, subtask_limit: None, min volumes: 27
+
+training duration: 41h 51m 5s
+test duration: 0h 3m 6s
+total duration: 41h 54m 11s
+spend loading: 0.46%
+
+number of epochs: 105
+model saved at epoch: 84
+lowest training loss: 0.0000 (epoch: 95)
+lowest validation loss: 0.0625 (epoch: 84)
+highest validation accuracy: 0.9861 (epoch: 78)
+strict evaluation: False
+accuracy: 0.9905
+balanced accuracy: 0.9894
+macro f1 score: 0.9896
+weighted f1 score: 0.9905
+
+dataset split: [0.7, 0.1, 0.2]
+dataset metadata:
+	Number of subjects: 1095 (18)
+	Number of all subtasks: 34927 (2131)
+	Total file size: ~3247.204 GB
+		EMOTION: 4188 (2094)
+			fear: 4188 (2094)
+		GAMBLING: 4344 (0)
+			loss: 4344 (0)
+		LANGUAGE: 8374 (34)
+			present_story: 8374 (34)
+		MOTOR: 4334 (0)
+			rh: 4334 (0)
+		RELATIONAL: 6256 (2)
+			relation: 6256 (2)
+		SOCIAL: 5258 (1)
+			mental: 5258 (1)
+		WM: 2173 (0)
+			2bk_places: 2173 (0)
+	Phase encodings:
+		LR: 17952 (1080)
+		RL: 16975 (1051)
+	Mode: preprocessed
+	Subtask limit: None

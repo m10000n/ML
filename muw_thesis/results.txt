@@ -1,0 +1,163 @@
+Epochs:
+	Inceptron - preprocessed: 66, 109, 105, 41, 36 (sum: 357, mean: 71, std: 34)
+	ResNet4D - preprocessed:  75, 107, 116, 103, 72 (sum: 473, mean: 95, std: 20)
+	BrT - preprocessed:       84, 88, 86, 94, 64 (sum: 416, mean: 83, std: 11)
+	Inceptron - unprocessed:  62, 67, 57, 64, 66 (sum: 316, mean: 63, std: 4)
+	ResNet4D - unprocessed:   90, 94, 77, 92, 83 (sum: 436, mean: 87, std: 7)
+	BrT - unprocessed:        107, 229, 156, 116, 121 (sum: 729, mean: 146, std: 50)
+
+Train Duration (hours):
+	Inceptron - preprocessed: 26.69, 43.23, 41.85, 16.95, 14.98 (sum: 143.69, mean: 28.74, std: 13.37)
+	ResNet4D - preprocessed:  25.50, 35.88, 38.89, 34.65, 24.47 (sum: 159.39, mean: 31.88, std: 6.49)
+	BrT - preprocessed:       12.25, 12.75, 12.55, 13.70, 9.42 (sum: 60.66, mean: 12.13, std: 1.61)
+	Inceptron - unprocessed:  17.79, 19.10, 23.22, 26.70, 27.44 (sum: 114.25, mean: 22.85, std: 4.35)
+	ResNet4D - unprocessed:   35.15, 39.68, 31.74, 34.20, 22.71 (sum: 163.47, mean: 32.69, std: 6.28)
+	BrT - unprocessed:        37.97, 82.91, 45.21, 33.57, 34.38 (sum: 234.04, mean: 46.81, std: 20.70)
+
+BS Macro F1 Score:
+	Inceptron - preprocessed: 0.982 [0.980–0.984]
+	ResNet4D - preprocessed:  0.975 [0.972–0.977]
+	BrT - preprocessed:       0.973 [0.970–0.975]
+	Inceptron - unprocessed:  0.949 [0.945–0.952]
+	ResNet4D - unprocessed:   0.929 [0.925–0.933]
+	BrT - unprocessed:        0.719 [0.712–0.727]
+
+BS Accuracy:
+	Inceptron - preprocessed: 0.984 [0.982–0.986]
+	ResNet4D - preprocessed:  0.978 [0.975–0.980]
+	BrT - preprocessed:       0.975 [0.972–0.977]
+	Inceptron - unprocessed:  0.952 [0.949–0.956]
+	ResNet4D - unprocessed:   0.934 [0.930–0.938]
+	BrT - unprocessed:        0.756 [0.749–0.762]
+
+BS Balanced Accuracy:
+	Inceptron - preprocessed: 0.982 [0.980–0.984]
+	ResNet4D - preprocessed:  0.974 [0.971–0.977]
+	BrT - preprocessed:       0.972 [0.969–0.975]
+	Inceptron - unprocessed:  0.948 [0.944–0.952]
+	ResNet4D - unprocessed:   0.928 [0.923–0.932]
+	BrT - unprocessed:        0.715 [0.707–0.722]
+
+Fold Macro F1 Score (mean, std):
+	Inceptron - preprocessed: 0.982 ± 0.006
+	ResNet4D - preprocessed:  0.975 ± 0.006
+	BrT - preprocessed:       0.973 ± 0.003
+	Inceptron - unprocessed:  0.949 ± 0.006
+	ResNet4D - unprocessed:   0.929 ± 0.014
+	BrT - unprocessed:        0.717 ± 0.066
+
+Fold Accuracy (mean, std):
+	Inceptron - preprocessed: 0.984 ± 0.006
+	ResNet4D - preprocessed:  0.978 ± 0.006
+	BrT - preprocessed:       0.975 ± 0.003
+	Inceptron - unprocessed:  0.952 ± 0.006
+	ResNet4D - unprocessed:   0.934 ± 0.014
+	BrT - unprocessed:        0.756 ± 0.050
+
+Fold Balanced Accuracy (mean, std):
+	Inceptron - preprocessed: 0.982 ± 0.007
+	ResNet4D - preprocessed:  0.974 ± 0.007
+	BrT - preprocessed:       0.972 ± 0.004
+	Inceptron - unprocessed:  0.948 ± 0.006
+	ResNet4D - unprocessed:   0.928 ± 0.015
+	BrT - unprocessed:        0.715 ± 0.065
+
+Class Names: Emotion, Gambling, Language, Motor, Relational, Social, WM
+Support: 4188, 4344, 8374, 4334, 6256, 5258, 2172
+
+BS Precision:
+	Inceptron - preprocessed: 0.978 [0.973–0.983], 0.971 [0.964–0.976], 0.987 [0.983–0.989], 0.997 [0.995–0.999], 0.986 [0.982–0.989], 0.986 [0.982–0.989], 0.974 [0.967–0.981]
+	ResNet4D - preprocessed:  0.976 [0.970–0.981], 0.938 [0.929–0.947], 0.983 [0.979–0.986], 0.997 [0.994–0.998], 0.984 [0.979–0.987], 0.987 [0.983–0.990], 0.966 [0.957–0.974]
+	BrT - preprocessed:       0.971 [0.966–0.976], 0.950 [0.942–0.957], 0.980 [0.976–0.983], 0.997 [0.994–0.998], 0.967 [0.961–0.972], 0.988 [0.984–0.991], 0.960 [0.949–0.969]
+	Inceptron - unprocessed:  0.956 [0.949–0.963], 0.887 [0.875–0.898], 0.979 [0.975–0.982], 0.989 [0.985–0.992], 0.918 [0.909–0.927], 0.982 [0.978–0.986], 0.932 [0.919–0.943]
+	ResNet4D - unprocessed:   0.939 [0.930–0.946], 0.850 [0.837–0.861], 0.965 [0.960–0.969], 0.986 [0.982–0.990], 0.896 [0.886–0.904], 0.958 [0.952–0.964], 0.924 [0.912–0.935]
+	BrT - unprocessed:        0.604 [0.591–0.618], 0.640 [0.616–0.663], 0.854 [0.845–0.863], 0.933 [0.924–0.941], 0.607 [0.596–0.618], 0.873 [0.862–0.883], 0.720 [0.699–0.740]
+
+BS Recall:
+	Inceptron - preprocessed: 0.976 [0.970–0.981], 0.975 [0.969–0.979], 0.990 [0.987–0.992], 0.999 [0.997–1.000], 0.982 [0.977–0.985], 0.986 [0.982–0.990], 0.967 [0.959–0.974]
+	ResNet4D - preprocessed:  0.966 [0.958–0.972], 0.970 [0.965–0.975], 0.986 [0.982–0.989], 0.996 [0.994–0.998], 0.976 [0.970–0.980], 0.981 [0.977–0.985], 0.944 [0.933–0.954]
+	BrT - preprocessed:       0.955 [0.947–0.962], 0.958 [0.951–0.964], 0.985 [0.981–0.988], 0.995 [0.993–0.997], 0.967 [0.962–0.972], 0.986 [0.982–0.990], 0.960 [0.951–0.968]
+	Inceptron - unprocessed:  0.945 [0.936–0.952], 0.891 [0.880–0.901], 0.981 [0.977–0.984], 0.974 [0.967–0.979], 0.933 [0.925–0.940], 0.976 [0.970–0.981], 0.939 [0.927–0.948]
+	ResNet4D - unprocessed:   0.915 [0.905–0.925], 0.865 [0.852–0.876], 0.977 [0.972–0.980], 0.956 [0.948–0.964], 0.897 [0.888–0.906], 0.973 [0.968–0.978], 0.909 [0.896–0.921]
+	BrT - unprocessed:        0.699 [0.682–0.715], 0.312 [0.294–0.329], 0.913 [0.905–0.920], 0.870 [0.857–0.882], 0.773 [0.761–0.785], 0.887 [0.876–0.897], 0.551 [0.529–0.574]
+
+BS F1 Score:
+	Inceptron - preprocessed: 0.977 [0.972–0.981], 0.973 [0.968–0.976], 0.988 [0.986–0.990], 0.998 [0.997–0.999], 0.984 [0.981–0.987], 0.986 [0.983–0.989], 0.971 [0.965–0.976]
+	ResNet4D - preprocessed:  0.971 [0.966–0.975], 0.954 [0.948–0.959], 0.984 [0.982–0.987], 0.996 [0.995–0.998], 0.980 [0.976–0.983], 0.984 [0.981–0.987], 0.955 [0.948–0.962]
+	BrT - preprocessed:       0.963 [0.958–0.968], 0.954 [0.949–0.959], 0.982 [0.979–0.985], 0.996 [0.994–0.997], 0.967 [0.963–0.971], 0.987 [0.984–0.990], 0.960 [0.953–0.966]
+	Inceptron - unprocessed:  0.951 [0.944–0.956], 0.889 [0.880–0.897], 0.980 [0.977–0.982], 0.981 [0.977–0.984], 0.926 [0.919–0.932], 0.979 [0.975–0.982], 0.935 [0.926–0.943]
+	ResNet4D - unprocessed:   0.927 [0.919–0.933], 0.857 [0.848–0.866], 0.971 [0.967–0.974], 0.971 [0.966–0.975], 0.897 [0.889–0.904], 0.966 [0.961–0.970], 0.917 [0.908–0.926]
+	BrT - unprocessed:        0.648 [0.636–0.661], 0.420 [0.400–0.438], 0.883 [0.876–0.889], 0.900 [0.892–0.908], 0.680 [0.670–0.689], 0.880 [0.871–0.888], 0.624 [0.606–0.643]
+
+Fold Precision (mean, std):
+	Inceptron - preprocessed: 0.978 ± 0.008, 0.971 ± 0.019, 0.987 ± 0.006, 0.997 ± 0.003, 0.986 ± 0.009, 0.986 ± 0.009, 0.975 ± 0.021
+	ResNet4D - preprocessed:  0.976 ± 0.002, 0.939 ± 0.018, 0.983 ± 0.008, 0.997 ± 0.002, 0.984 ± 0.009, 0.987 ± 0.003, 0.966 ± 0.014
+	BrT - preprocessed:       0.971 ± 0.011, 0.950 ± 0.016, 0.980 ± 0.004, 0.997 ± 0.002, 0.967 ± 0.016, 0.988 ± 0.001, 0.961 ± 0.024
+	Inceptron - unprocessed:  0.956 ± 0.011, 0.888 ± 0.021, 0.979 ± 0.006, 0.989 ± 0.005, 0.919 ± 0.021, 0.982 ± 0.006, 0.932 ± 0.019
+	ResNet4D - unprocessed:   0.939 ± 0.010, 0.851 ± 0.043, 0.965 ± 0.015, 0.986 ± 0.004, 0.896 ± 0.028, 0.958 ± 0.009, 0.925 ± 0.022
+	BrT - unprocessed:        0.610 ± 0.065, 0.617 ± 0.137, 0.855 ± 0.031, 0.933 ± 0.026, 0.619 ± 0.089, 0.876 ± 0.067, 0.718 ± 0.059
+
+Fold Recall (mean, std):
+	Inceptron - preprocessed: 0.976 ± 0.015, 0.975 ± 0.016, 0.990 ± 0.007, 0.999 ± 0.001, 0.982 ± 0.007, 0.986 ± 0.004, 0.967 ± 0.026
+	ResNet4D - preprocessed:  0.966 ± 0.020, 0.970 ± 0.008, 0.986 ± 0.004, 0.996 ± 0.004, 0.976 ± 0.009, 0.981 ± 0.003, 0.944 ± 0.014
+	BrT - preprocessed:       0.955 ± 0.027, 0.958 ± 0.014, 0.985 ± 0.009, 0.995 ± 0.001, 0.967 ± 0.010, 0.986 ± 0.003, 0.960 ± 0.019
+	Inceptron - unprocessed:  0.945 ± 0.013, 0.891 ± 0.033, 0.981 ± 0.009, 0.974 ± 0.008, 0.933 ± 0.014, 0.976 ± 0.006, 0.939 ± 0.012
+	ResNet4D - unprocessed:   0.915 ± 0.046, 0.865 ± 0.024, 0.977 ± 0.006, 0.956 ± 0.006, 0.897 ± 0.030, 0.973 ± 0.007, 0.909 ± 0.025
+	BrT - unprocessed:        0.699 ± 0.088, 0.312 ± 0.138, 0.913 ± 0.041, 0.870 ± 0.030, 0.773 ± 0.035, 0.887 ± 0.036, 0.552 ± 0.178
+
+Fold F1 Score (mean, std):
+	Inceptron - preprocessed: 0.977 ± 0.009, 0.973 ± 0.013, 0.988 ± 0.003, 0.998 ± 0.001, 0.984 ± 0.007, 0.986 ± 0.003, 0.971 ± 0.014
+	ResNet4D - preprocessed:  0.970 ± 0.011, 0.954 ± 0.011, 0.984 ± 0.006, 0.996 ± 0.002, 0.980 ± 0.005, 0.984 ± 0.002, 0.955 ± 0.011
+	BrT - preprocessed:       0.963 ± 0.009, 0.954 ± 0.006, 0.982 ± 0.003, 0.996 ± 0.001, 0.967 ± 0.005, 0.987 ± 0.002, 0.960 ± 0.005
+	Inceptron - unprocessed:  0.951 ± 0.009, 0.889 ± 0.015, 0.980 ± 0.005, 0.981 ± 0.005, 0.926 ± 0.005, 0.979 ± 0.003, 0.935 ± 0.012
+	ResNet4D - unprocessed:   0.926 ± 0.021, 0.858 ± 0.027, 0.971 ± 0.006, 0.971 ± 0.004, 0.897 ± 0.025, 0.966 ± 0.008, 0.917 ± 0.014
+	BrT - unprocessed:        0.648 ± 0.053, 0.411 ± 0.150, 0.883 ± 0.029, 0.900 ± 0.025, 0.683 ± 0.052, 0.881 ± 0.044, 0.613 ± 0.133
+
+Macro F1 Score Diff:
+	Inceptron 0.034 [0.031–0.037]
+	ResNet4D 0.046 [0.042–0.049]
+	BrT 0.253 [0.246–0.261]
+
+Error Correlation (Pearson):
+	prep:
+		Inceptron - ResNet4D: 0.800
+		Inceptron - BrT: 0.810
+		ResNet4D - BrT: 0.683
+	unp:
+		Inceptron - ResNet4D: 0.970
+		Inceptron - BrT: 0.689
+		ResNet4D - BrT: 0.734
+	prep - unp:
+		Inceptron - Inceptron: 0.139
+		ResNet4D - ResNet4D: 0.406
+		BrT - BrT: 0.466
+
+Error Correlation (Spearman):
+	prep:
+		Inceptron - ResNet4D: 0.864
+		Inceptron - BrT: 0.863
+		ResNet4D - BrT: 0.817
+	unp:
+		Inceptron - ResNet4D: 0.927
+		Inceptron - BrT: 0.687
+		ResNet4D - BrT: 0.715
+	prep - unp:
+		Inceptron - Inceptron: 0.369
+		ResNet4D - ResNet4D: 0.549
+		BrT - BrT: 0.462
+
+Relative Tail Instability (Train Loss):
+	Inceptron - preprocessed: 0.1821 ± 0.0746
+	ResNet4D - preprocessed:  0.1646 ± 0.0428
+	BrT - preprocessed:       0.1009 ± 0.0080
+	Inceptron - unprocessed:  0.0593 ± 0.0043
+	ResNet4D - unprocessed:   0.0418 ± 0.0080
+	BrT - unprocessed:        0.0112 ± 0.0030
+
+Relative Tail Instability (Val Loss):
+	Inceptron - preprocessed: 0.1970 ± 0.0933
+	ResNet4D - preprocessed:  0.1620 ± 0.0378
+	BrT - preprocessed:       0.1350 ± 0.0345
+	Inceptron - unprocessed:  0.1601 ± 0.0352
+	ResNet4D - unprocessed:   0.1186 ± 0.0245
+	BrT - unprocessed:        0.0299 ± 0.0106
